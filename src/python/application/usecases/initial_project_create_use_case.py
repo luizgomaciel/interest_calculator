@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 
 from src.python.application.domain.initial_project import InitialProject
+from src.python.application.repositories.project_repository import ProjectRepository
+
 
 @dataclass
 class InitialProjectCreateRequest:
@@ -8,8 +10,8 @@ class InitialProjectCreateRequest:
     project_description: str
 
 class InitialProjectCreateUseCase:
-    def __init__(self, project_repository):
-        self.project_repository = project_repository
+    def __init__(self, repository: ProjectRepository):
+        self.repository = repository
 
     def execute(self, request: InitialProjectCreateRequest) -> str:
         domain = InitialProject(
@@ -17,7 +19,7 @@ class InitialProjectCreateUseCase:
             description=request.project_description
         )
 
-        project_id = self.project_repository.create_project(
+        project_id = self.repository.create_project(
             domain
         )
 

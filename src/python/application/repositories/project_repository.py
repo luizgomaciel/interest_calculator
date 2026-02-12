@@ -8,5 +8,5 @@ class ProjectRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def create_project(self, InitialProject) -> str:
+    def create_project(self, initial_project: InitialProject) -> str:
         raise NotImplementedError

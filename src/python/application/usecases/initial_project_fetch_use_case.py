@@ -1,8 +1,10 @@
 from src.python.application.domain.initial_project import InitialProject
+from src.python.application.repositories.project_repository import ProjectRepository
+
 
 class InitialProjectFetchUseCase:
-    def __init__(self, project_repository):
-        self.project_repository = project_repository
+    def __init__(self, repository: ProjectRepository):
+        self.repository = repository
 
     def execute(self, project_id) -> InitialProject:
-        return self.project_repository.get_project_by_id(project_id)
+        return self.repository.get_project_by_id(project_id)
