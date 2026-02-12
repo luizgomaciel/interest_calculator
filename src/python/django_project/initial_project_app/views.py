@@ -23,7 +23,7 @@ class InitialProjectView(viewsets.ViewSet):
         }
         return Response(data, status=HTTP_200_OK)
 
-    def post(self, request):
+    def post(self, request: Response) -> Response:
         use_case = InitialProjectCreateUseCase(
             repository=DjangoProjectRepository()
         )

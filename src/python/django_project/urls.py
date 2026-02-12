@@ -16,16 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from rest_framework.routers import DefaultRouter
+from django.views.generic import RedirectView
 
 from src.python.django_project.initial_project_app.views import InitialProjectView
 
-router = DefaultRouter()
-router.register(r"api/projects", InitialProjectView, basename="project")
+urlCustom = [
+    path('projects/', InitialProjectView.as_view({'post': 'post'}), name='project-create'),
+    path('projects/<int:project_id>/', InitialProjectView.as_view({'get': 'get'}), name='project-detail'),
+]
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='/projects/', permanent=False), name='home'),
     path('admin/', admin.site.urls),
-] + router.urls
-
-# path('projects/', InitialProjectListCreateView.as_view({'post': 'post'}), name='project-create'),
-# path('projects/<int:project_id>/', InitialProjectListCreateView.as_view({'get': 'get'}), name='project-detail'),
+] + urlCustom
