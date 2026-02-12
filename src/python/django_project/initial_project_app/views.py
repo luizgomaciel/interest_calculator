@@ -1,3 +1,4 @@
+
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED
@@ -8,7 +9,7 @@ from src.python.application.usecases.initial_project_fetch_use_case import Initi
 from src.python.django_project.initial_project_app.repository import DjangoProjectRepository
 
 
-class InitialProjectListCreateView(viewsets.ViewSet):
+class InitialProjectView(viewsets.ViewSet):
     def get(self, request, project_id):
         use_case = InitialProjectFetchUseCase(
             repository=DjangoProjectRepository()

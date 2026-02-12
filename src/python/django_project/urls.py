@@ -16,11 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 
-from src.python.django_project.initial_project_app.views import InitialProjectListCreateView
+from src.python.django_project.initial_project_app.views import InitialProjectView
+
+router = DefaultRouter()
+router.register(r"api/projects", InitialProjectView, basename="project")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('projects/', InitialProjectListCreateView.as_view({'post': 'post'}), name='project-create'),
-    path('projects/<int:project_id>/', InitialProjectListCreateView.as_view({'get': 'get'}), name='project-detail'),
-]
+] + router.urls
+
+# path('projects/', InitialProjectListCreateView.as_view({'post': 'post'}), name='project-create'),
+# path('projects/<int:project_id>/', InitialProjectListCreateView.as_view({'get': 'get'}), name='project-detail'),
