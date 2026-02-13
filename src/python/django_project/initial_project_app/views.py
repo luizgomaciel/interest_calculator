@@ -10,6 +10,7 @@ from src.python.application.usecases.initial_project_create_use_case import (
 )
 from src.python.application.usecases.initial_project_fetch_use_case import InitialProjectFetchUseCase
 from src.python.django_project.initial_project_app.repository import DjangoProjectRepository
+from src.python.django_project.initial_project_app.serializers import InitialProjectSerializer
 
 
 class InitialProjectView(viewsets.ViewSet):
@@ -17,12 +18,8 @@ class InitialProjectView(viewsets.ViewSet):
         use_case = InitialProjectFetchUseCase(repository=DjangoProjectRepository())
         project = use_case.execute(project_id=pk)
 
-        data = {
-            "id": project.id,
-            "name": project.name,
-            "description": project.description,
-        }
-        return Response(data, status=HTTP_200_OK)
+        serializer = InitialProjectSerializer(project)
+        return Response(serializer.data, status=HTTP_200_OK)
 
     def create(self, request: Request):
         use_case = InitialProjectCreateUseCase(repository=DjangoProjectRepository())
