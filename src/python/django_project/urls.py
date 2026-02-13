@@ -17,15 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import RedirectView
+from rest_framework.routers import DefaultRouter
 
 from src.python.django_project.initial_project_app.views import InitialProjectView
 
-urlCustom = [
-    path('projects/', InitialProjectView.as_view({'post': 'create'}), name='project-create'),
-    path('projects/<str:pk>/', InitialProjectView.as_view({'get': 'retrieve'}), name='project-detail'),
-]
+router = DefaultRouter()
+router.register(r"api/projects", InitialProjectView, basename="projects")
 
 urlpatterns = [
-    path('', RedirectView.as_view(url='/projects/', permanent=False), name='home'),
+    path('', RedirectView.as_view(url='api/projects', permanent=False), name='home'),
     path('admin/', admin.site.urls),
-] + urlCustom
+] + router.urls
