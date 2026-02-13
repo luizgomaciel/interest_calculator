@@ -5,4 +5,4 @@ from dataclasses import dataclass, field
 class InitialProject:
     name: str
     description: str
-    id: str = field(default_factory=str(uuid.uuid4))
+    id: str = field(default_factory=uuid.uuid4)

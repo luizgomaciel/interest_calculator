@@ -21,8 +21,8 @@ from django.views.generic import RedirectView
 from src.python.django_project.initial_project_app.views import InitialProjectView
 
 urlCustom = [
-    path('projects/', InitialProjectView.as_view({'post': 'post'}), name='project-create'),
-    path('projects/<int:project_id>/', InitialProjectView.as_view({'get': 'get'}), name='project-detail'),
+    path('projects/', InitialProjectView.as_view({'post': 'create'}), name='project-create'),
+    path('projects/<str:pk>/', InitialProjectView.as_view({'get': 'retrieve'}), name='project-detail'),
 ]
 
 urlpatterns = [
