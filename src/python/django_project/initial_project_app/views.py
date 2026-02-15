@@ -4,11 +4,11 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED
 
-from src.python.application.usecases.initial_project_create_use_case import (
+from src.python.application.usecases.exemplo.initial_project_create_use_case import (
     InitialProjectCreateUseCase,
     InitialProjectCreateRequest,
 )
-from src.python.application.usecases.initial_project_fetch_use_case import InitialProjectFetchUseCase
+from src.python.application.usecases.exemplo.initial_project_fetch_use_case import InitialProjectFetchUseCase
 from src.python.django_project.initial_project_app.repository import DjangoProjectRepository
 from src.python.django_project.initial_project_app.serializers import InitialProjectSerializer
 
