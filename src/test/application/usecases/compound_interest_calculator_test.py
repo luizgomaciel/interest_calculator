@@ -507,6 +507,54 @@ class TestSimulationComparativeAnalysis:
 
         assert True
 
+    def test_validation_scenario_6pct_6000_monthly_6years(self, use_case: SimulateInvestmentUseCase):
+        """
+        Cenário para validação com outro aplicativo:
+        - Taxa anual: 6%
+        - Saldo inicial: R$ 0,00
+        - Depósito mensal: R$ 6.000,00
+        - Período: 6 anos (72 meses)
+        """
+        print("\n\n")
+        print("✅" * 40)
+        print(" CENÁRIO DE VALIDAÇÃO - COMPARAR COM OUTRO APLICATIVO ".center(80, "✅"))
+        print("✅" * 40)
+        print("\n📋 PARÂMETROS DO CENÁRIO:")
+        print("-" * 40)
+        print("  • Taxa anual:        6%")
+        print("  • Saldo inicial:     R$ 0,00")
+        print("  • Depósito mensal:   R$ 6.000,00")
+        print("  • Período:           6 anos (72 meses)")
+        print("-" * 40)
+
+        contribution = Contribution(amount=6000.0, frequency=CompoundingFrequency.MONTHLY)
+        investment = Investment(
+            principal=0.0,
+            annual_rate=0.06,  # 6% ao ano
+            total_periods=72,  # 6 anos
+            compounding_frequency=CompoundingFrequency.MONTHLY,
+            contribution=contribution
+        )
+        result = use_case.execute(investment)
+        print_simulation_report(result, "VALIDAÇÃO: 6% a.a. | R$ 0 inicial | R$ 6.000/mês | 6 anos")
+
+        # Dados esperados para validação
+        print("\n📊 DADOS PARA VALIDAÇÃO:")
+        print("-" * 60)
+        print(f"  • Total Investido:     R$ {result.summary.total_invested:,.2f}")
+        print(f"  • Total de Juros:      R$ {result.summary.total_interest:,.2f}")
+        print(f"  • Saldo Final:         R$ {result.summary.final_balance:,.2f}")
+        print(f"  • Taxa Mensal:         {0.06/12 * 100:.6f}%")
+        print(f"  • Taxa Efetiva Anual:  {result.summary.effective_annual_rate * 100:.4f}%")
+        print("-" * 60)
+
+        # Assertions básicas
+        assert result.summary.total_invested == 6000.0 * 72  # R$ 432.000,00
+        assert result.summary.total_deposits == 6000.0 * 72
+        assert result.summary.final_balance > result.summary.total_invested
+        assert len(result.monthly_evolution) == 72
+        assert len(result.yearly_evolution) == 6
+
     def test_summary_comparison_table(self, use_case: SimulateInvestmentUseCase):
         """Gera uma tabela resumida para comparação rápida de cenários"""
         print("\n\n")

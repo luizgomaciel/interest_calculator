@@ -93,15 +93,9 @@ class SimulationReportBuilder:
     def build_summary(self, result: SimulationResult, investment: Investment) -> SimulationSummary:
 
         total_deposits = result.total_invested - investment.principal
-
-        years = (investment.total_periods /investment.compounding_frequency.value)
-
-        if result.total_invested > 0:
-            effective_annual_rate = (
-                                            (result.final_amount / result.total_invested) ** (1 / years)
-                                    ) - 1
-        else:
-            effective_annual_rate = 0.0
+        periods_per_year = investment.compounding_frequency.value
+        period_rate = (1 + investment.annual_rate) ** (1 / periods_per_year) - 1
+        effective_annual_rate = (1 + period_rate) ** periods_per_year - 1
 
         return SimulationSummary(
             final_balance=result.final_amount,

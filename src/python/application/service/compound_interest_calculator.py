@@ -4,7 +4,7 @@ from src.python.application.domain.simulation_result import SimulationResult, Co
 
 def _convert_annual_rate_to_period_rate(annual_rate: float, frequency: CompoundingFrequency) -> float:
     periods_per_year = frequency.value
-    return (1 + annual_rate) ** (1 / periods_per_year) - 1
+    return annual_rate / periods_per_year
 
 
 class CompoundInterestCalculator:
@@ -21,7 +21,6 @@ class CompoundInterestCalculator:
         for period in range(1, investment.total_periods + 1):
 
             contribution_amount = 0.0
-
             if investment.contribution:
                 if investment.contribution.frequency == investment.compounding_frequency:
                     contribution_amount = investment.contribution.amount
