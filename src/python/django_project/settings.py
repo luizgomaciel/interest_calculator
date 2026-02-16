@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'django_project.initial_project_app',
+    'django_project.calculator',
 ]
 
 MIDDLEWARE = [

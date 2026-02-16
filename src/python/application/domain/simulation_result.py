@@ -8,6 +8,16 @@ class CompoundingFrequency(Enum):
     MONTHLY = 12
     YEARLY = 1
 
+    @classmethod
+    def _missing_(cls, value):
+        # Se vier string, tenta resolver pelo name
+        if isinstance(value, str):
+            try:
+                return cls[value]
+            except KeyError:
+                pass
+        return super()._missing_(value)
+
 
 @dataclass(frozen=True)
 class Contribution:
